@@ -1,0 +1,13 @@
+FROM node:latest
+EXPOSE 5000
+WORKDIR /usr/src/app
+
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash
+RUN apt install -y nodejs
+COPY . .
+RUN node -v && npm -v
+RUN npm install react-scripts
+RUN npm install react-dom
+RUN npm run build
+RUN npm install -g serve
+CMD ["serve", "-s", "-l", "5000", "build"]
