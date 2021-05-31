@@ -1,0 +1,35 @@
+# this is without nginx, as it will be needed in the next exercise
+
+version: "3.5"
+
+services:
+  frontend:
+    image: frontend
+    ports:
+      - 5000:5000
+    environment:
+      - BACKEND_URL=http://localhost:8080
+
+  backend:
+    image: backend
+    ports:
+      - 8080:8080
+      - 5432:5432
+    environment:
+      - FRONT_URL=http://localhost:5000
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+    depends_on:
+      - db
+
+  redis:
+    image: "redis:alpine"
+
+  db:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+    container_name: database
+    volumes:
+      - ./database:/var/lib/postgresql/data
