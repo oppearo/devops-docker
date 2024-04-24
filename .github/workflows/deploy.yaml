@@ -22,4 +22,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: user/devops-part3:latest
+          tags: oppearo/devops-part3:latest
