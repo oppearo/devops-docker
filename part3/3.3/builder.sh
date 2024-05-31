@@ -44,12 +44,15 @@ if [ -z "$1" ] || [ -z "$2" ]; then
   exit 1
 fi
 
-echo "All is good! Arguments given: ""$1"" ""$2"""
+echo "All is good! Arguments given: ""$1"" ""$2""". Starting...
 
 rm -rf temp \
   && git clone https://github.com/"$1".git ./temp \
   && cd temp || exit \
   && docker build -t "$2" . \
+  && docker login \
   && docker push "$2" \
   && cd .. \
   && rm -rf temp
+
+echo "Success!"
