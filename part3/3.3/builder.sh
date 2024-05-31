@@ -46,8 +46,10 @@ fi
 
 echo "All is good! Arguments given: ""$1"" ""$2"""
 
-rm -rf ./temp \
+rm -rf temp \
   && git clone https://github.com/"$1".git ./temp \
   && cd temp || exit \
   && docker build -t "$2" . \
-  && docker push "$2"
+  && docker push "$2" \
+  && cd .. \
+  && rm -rf temp
