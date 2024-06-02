@@ -1,0 +1,26 @@
+# newer node versions would not work
+FROM node:16.20.0-alpine as node
+
+FROM alpine:latest
+
+COPY --from=node /usr/lib /usr/lib
+COPY --from=node /usr/local/share /usr/local/share
+COPY --from=node /usr/local/lib /usr/local/lib
+COPY --from=node /usr/local/include /usr/local/include
+COPY --from=node /usr/local/bin /usr/local/bin
+
+EXPOSE 5000
+WORKDIR /usr/src/app
+COPY ./material-applications/example-frontend .
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
+
+RUN node -v && npm -v && \
+    npm install && \
+    npm run build && \
+    npm install -g serve && \
+    addgroup -S appgroup && \
+    adduser -S appuser -G appgroup
+
+USER appuser
+
+CMD ["serve", "-s", "-l", "5000", "build"]
