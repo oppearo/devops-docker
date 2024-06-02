@@ -9,3 +9,7 @@ The final image sizes:
 example-frontend          latest    c0a69f0548d3   16 minutes ago   474MB
 example-backend           latest    03d7f3325ccd   37 minutes ago   248MB
 ```
+
+Screenshot to show that the images still work:
+
+![alt text](image.png)
